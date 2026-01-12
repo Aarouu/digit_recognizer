@@ -18,7 +18,7 @@ The CNN version is more accurate and robust to small variations in handwriting, 
 
 ## Installation
 
-1. **Clone the repository:**
+1. **Clone the repository and run the scripts:**
 ```bash
 git clone git@github.com:Aarouu/digit_recognizer.git
-cd handwritten-digit-cnn
+```
