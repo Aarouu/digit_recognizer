@@ -11,10 +11,10 @@ import cv2
 class ANN(nn.Module):
     def __init__(self):
         super(ANN, self).__init__()
-        self.fc1 = nn.Linear(28*28, 128)
-        self.fc2 = nn. Linear(128, 128)
-        self.fc3 = nn.Linear(128, 128)
-        self.fc4 = nn.Linear(128, 10)
+        self.fc1 = nn.Linear(28*28, 150)
+        self.fc2 = nn. Linear(150, 150)
+        self.fc3 = nn.Linear(150, 150)
+        self.fc4 = nn.Linear(150, 10)
         self.relu = nn.ReLU()
 
     def forward(self, x):
@@ -42,7 +42,7 @@ model = ANN()
 loss_fn = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-episodes = 10
+episodes = 15
 
 for epoch in range(episodes):
     running_loss = 0.0
@@ -87,32 +87,33 @@ def draw_digit():
     font = pygame.font.Font(None, 36)
 
     while True:
-        #screen.fill((0, 0, 0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            elif event.type == pygame.MOUSEBUTTONDOWN:
                 drawing = True
-            if event.type == pygame.MOUSEBUTTONUP:
+            elif event.type == pygame.MOUSEBUTTONUP:
                 drawing = False
                 prediction = predict_digit(screen)
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_c:
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:  # Clear screen
                     screen.fill((0, 0, 0))
                     prediction = None
-                    pygame.display.flip()  
-
-            
-            if event.type == pygame.MOUSEMOTION and drawing:
+            elif event.type == pygame.MOUSEMOTION and drawing:
+                # Draw a white circle at mouse position
                 pygame.draw.circle(screen, (255, 255, 255), event.pos, 8)
 
-            #display
+        # Update display every frame
+        pygame.display.flip()
+        screen.fill((0, 0, 0), (0, window_size, window_size, 50))  # clear only prediction area
+
+        # Show prediction text
         if prediction is not None:
-            text = font.render(f" Prediction: {prediction}", True, (0, 255, 0))
-            screen.blit(text, (10, window_size+10))
-            
-            pygame.display.flip()
-            clock.tick(60)
+            text = font.render(f"Prediction: {prediction}", True, (0, 255, 0))
+            screen.blit(text, (10, window_size + 10))
+
+        clock.tick(60)
+
 
 def process_drawing(screen):
     surface = pygame.surfarray.array3d(screen)
