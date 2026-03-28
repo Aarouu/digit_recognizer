@@ -1,5 +1,9 @@
-torch==2.9.1+cu128
-torchvision==0.15.2+cu128
+torch==2.9.1
+torchvision==0.20.1
 numpy==1.26.0
 pygame==2.6.1
-opencv-python==4.8.1
+opencv-python
+scikit-learn
+pillow
+matplotlib
+k-means-constrained
